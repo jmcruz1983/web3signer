@@ -26,6 +26,8 @@ public interface AwsSecretsManagerParameters {
 
   String getRegion();
 
+  String getEndpointUrl();
+
   default long getCacheMaximumSize() {
     return 1;
   }

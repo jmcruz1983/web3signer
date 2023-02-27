@@ -24,6 +24,7 @@ public class AwsKeySigningMetadata extends SigningMetadata implements AwsSecrets
 
   private final AwsAuthenticationMode authenticationMode;
   private final String region;
+  private String endpointUrl;
   private final String accessKeyId;
   private final String secretAccessKey;
   private final String secretName;
@@ -69,6 +70,11 @@ public class AwsKeySigningMetadata extends SigningMetadata implements AwsSecrets
   @Override
   public String getRegion() {
     return region;
+  }
+
+  @Override
+  public String getEndpointUrl() {
+    return endpointUrl;
   }
 
   @Override

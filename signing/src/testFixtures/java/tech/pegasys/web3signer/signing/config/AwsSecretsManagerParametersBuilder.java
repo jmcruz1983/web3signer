@@ -20,6 +20,7 @@ public final class AwsSecretsManagerParametersBuilder {
   private String accessKeyId;
   private String secretAccessKey;
   private String region;
+  private String endpointUrl;
   private Collection<String> prefixesFilter = Collections.emptyList();
   private Collection<String> tagNamesFilter = Collections.emptyList();
   private Collection<String> tagValuesFilter = Collections.emptyList();
@@ -95,6 +96,7 @@ public final class AwsSecretsManagerParametersBuilder {
         accessKeyId,
         secretAccessKey,
         region,
+        endpointUrl,
         prefixesFilter,
         tagNamesFilter,
         tagValuesFilter,
@@ -106,6 +108,7 @@ public final class AwsSecretsManagerParametersBuilder {
     private final String accessKeyId;
     private final String secretAccessKey;
     private final String region;
+    private final String endpointUrl;
     private final Collection<String> prefixesFilter;
     private final Collection<String> tagNamesFilter;
     private final Collection<String> tagValuesFilter;
@@ -116,6 +119,7 @@ public final class AwsSecretsManagerParametersBuilder {
         final String accessKeyId,
         final String secretAccessKey,
         final String region,
+        String endpointUrl,
         final Collection<String> prefixesFilter,
         final Collection<String> tagNamesFilter,
         final Collection<String> tagValuesFilter,
@@ -124,6 +128,7 @@ public final class AwsSecretsManagerParametersBuilder {
       this.accessKeyId = accessKeyId;
       this.secretAccessKey = secretAccessKey;
       this.region = region;
+      this.endpointUrl = endpointUrl;
       this.prefixesFilter = prefixesFilter;
       this.tagNamesFilter = tagNamesFilter;
       this.tagValuesFilter = tagValuesFilter;
@@ -153,6 +158,11 @@ public final class AwsSecretsManagerParametersBuilder {
     @Override
     public String getRegion() {
       return region;
+    }
+
+    @Override
+    public String getEndpointUrl() {
+      return endpointUrl;
     }
 
     @Override

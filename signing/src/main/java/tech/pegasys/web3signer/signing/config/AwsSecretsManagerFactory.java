@@ -15,17 +15,39 @@ package tech.pegasys.web3signer.signing.config;
 import tech.pegasys.signers.aws.AwsSecretsManager;
 import tech.pegasys.signers.aws.AwsSecretsManagerProvider;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Optional;
+
 public class AwsSecretsManagerFactory {
+
+  private static URI getEndpointURI(final String endpointUrl) {
+    try {
+      return new URI(endpointUrl);
+    } catch (URISyntaxException e) {
+      throw new RuntimeException(e);
+    }
+  }
 
   public static AwsSecretsManager createAwsSecretsManager(
       final AwsSecretsManagerProvider awsSecretsManagerProvider,
       final AwsSecretsManagerParameters awsSecretsManagerParameters) {
+    final Optional<String> endpointUrlOptional =
+        Optional.ofNullable(awsSecretsManagerParameters.getEndpointUrl());
+    final URI endpointUri =
+        endpointUrlOptional.isPresent() ? getEndpointURI(endpointUrlOptional.get()) : null;
     switch (awsSecretsManagerParameters.getAuthenticationMode()) {
       case SPECIFIED:
-        return awsSecretsManagerProvider.createAwsSecretsManager(
-            awsSecretsManagerParameters.getAccessKeyId(),
-            awsSecretsManagerParameters.getSecretAccessKey(),
-            awsSecretsManagerParameters.getRegion());
+        return endpointUrlOptional.isPresent()
+            ? awsSecretsManagerProvider.createAwsSecretsManager(
+                awsSecretsManagerParameters.getAccessKeyId(),
+                awsSecretsManagerParameters.getSecretAccessKey(),
+                awsSecretsManagerParameters.getRegion(),
+                endpointUri)
+            : awsSecretsManagerProvider.createAwsSecretsManager(
+                awsSecretsManagerParameters.getAccessKeyId(),
+                awsSecretsManagerParameters.getSecretAccessKey(),
+                awsSecretsManagerParameters.getRegion());
       default:
         return awsSecretsManagerProvider.createAwsSecretsManager();
     }

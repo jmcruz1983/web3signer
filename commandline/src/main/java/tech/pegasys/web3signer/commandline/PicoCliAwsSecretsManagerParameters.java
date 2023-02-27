@@ -29,6 +29,7 @@ public class PicoCliAwsSecretsManagerParameters implements AwsSecretsManagerPara
   public static final String AWS_SECRETS_SECRET_ACCESS_KEY_OPTION =
       "--aws-secrets-secret-access-key";
   public static final String AWS_SECRETS_REGION_OPTION = "--aws-secrets-region";
+  public static final String AWS_ENDPOINT_URL_OPTION = "--aws-endpoint-url";
   public static final String AWS_SECRETS_PREFIXES_FILTER_OPTION = "--aws-secrets-prefixes-filter";
   public static final String AWS_SECRETS_TAG_NAMES_FILTER_OPTION = "--aws-secrets-tag-names-filter";
   public static final String AWS_SECRETS_TAG_VALUES_FILTER_OPTION =
@@ -71,6 +72,12 @@ public class PicoCliAwsSecretsManagerParameters implements AwsSecretsManagerPara
           "AWS region where Secrets Manager service is available. Required for SPECIFIED authentication mode.",
       paramLabel = "<Region>")
   private String region;
+
+  @Option(
+      names = {AWS_ENDPOINT_URL_OPTION},
+      description = "AWS endpoint url override.",
+      paramLabel = "<ENDPOINT_URL>")
+  private String endpointUrl;
 
   @Option(
       names = AWS_SECRETS_PREFIXES_FILTER_OPTION,
@@ -126,6 +133,11 @@ public class PicoCliAwsSecretsManagerParameters implements AwsSecretsManagerPara
   @Override
   public String getRegion() {
     return region;
+  }
+
+  @Override
+  public String getEndpointUrl() {
+    return endpointUrl;
   }
 
   @Override
